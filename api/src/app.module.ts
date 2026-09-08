@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ExpensesModule } from './expenses/expenses.module.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -28,7 +29,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
       }),
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    ExpensesModule
   ],
   controllers: [AppController],
   providers: [AppService],
