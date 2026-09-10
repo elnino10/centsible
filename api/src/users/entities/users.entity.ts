@@ -1,4 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import type { Relation } from "typeorm";
+import * as ExpensesEntity from "../../expenses/entities/expense.entity.js";
+import type { Expenses } from "../../expenses/entities/expense.entity.js";
 
 @Entity()
 export class Users {
@@ -17,6 +20,12 @@ export class Users {
     @Column()
     password: string;
 
-    @CreateDateColumn()
-    created_at: string;
+    @OneToMany(() => ExpensesEntity.Expenses, expense => expense.user)
+    expenses: Relation<Expenses[]>;
+
+    @CreateDateColumn({ name: 'created_at'})
+    createdAt: Date;
+
+    @CreateDateColumn({ name: 'updated_at'})
+    updateAt: Date;
 }
