@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ExpensesService } from './expenses.service.js';
-import { CreateExpenseDto } from './dto/create-expense.dto.js';
+import { RegisterExpenseDto } from './dto/register-expense.dto.js';
 import { UpdateExpenseDto } from './dto/update-expense.dto.js';
 
 @Controller('expenses')
@@ -8,9 +8,9 @@ export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Post()
-  create(@Body() createExpenseDto: CreateExpenseDto) {
-    return this.expensesService.create(createExpenseDto);
-  }
+  // create(@Body() registerExpenseDto: RegisterExpenseDto) {
+  //   return this.expensesService.registerExpense(userId, registerExpenseDto);
+  // }
 
   @Get()
   findAll() {

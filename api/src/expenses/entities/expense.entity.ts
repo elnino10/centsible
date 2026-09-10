@@ -18,7 +18,7 @@ export class Expenses {
     @Column({ type: 'numeric', precision: 12, scale: 2 })
     amount: number;
 
-    @Column()
+    @Column({ nullable: true })
     description: string;
 
     @Column({ enum: ['food', 'transportation', 'entertainment', 'utilities', 'healthcare', 'education', 'shopping', 'travel', 'other'] })

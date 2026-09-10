@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { CreateExpenseDto } from './dto/create-expense.dto.js';
+import { RegisterExpenseDto } from './dto/register-expense.dto.js';
 import { UpdateExpenseDto } from './dto/update-expense.dto.js';
+import { Expenses } from './entities/expense.entity.js';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ExpensesService {
-  create(createExpenseDto: CreateExpenseDto) {
-    return 'This action adds a new expense';
+
+  constructor(@InjectRepository(Expenses) private readonly expensesRepository: Repository<Expenses>) {}
+
+  registerExpense(userId: string, registerExpenseDto: RegisterExpenseDto) {
+    const newExpense = this.expensesRepository.create({
+      ...registerExpenseDto,
+      userId,
+    });
+    return this.expensesRepository.save(newExpense);
   }
 
   findAll() {
