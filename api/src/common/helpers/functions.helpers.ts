@@ -1,4 +1,8 @@
-export const sanitizeData = (data: any): object | [] | Promise<any[] | {}> => {
+export const sanitizeData = (data: any): any => {
+  if (data instanceof Date) {
+    return data.toISOString();
+  }
+
   if (Array.isArray(data)) {
     return data.map((item) => sanitizeData(item));
   } else if (typeof data === 'object' && data !== null) {
@@ -7,11 +11,10 @@ export const sanitizeData = (data: any): object | [] | Promise<any[] | {}> => {
       if (key !== 'password' && key !== 'token' && key !== 'refreshToken' && key !== 'accessToken') {
         sanitizedObject[key] = sanitizeData(data[key]);
       }
-      if (key === 'created_at' && data[key] instanceof Date) {
-        sanitizedObject[key] = data[key].toISOString();
-      }
     }
+
     return sanitizedObject;
   }
+
   return data;
 }

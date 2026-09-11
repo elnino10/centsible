@@ -26,6 +26,7 @@ export class UsersService {
         if (!user) {
             throw new NotFoundException(`User not found`);
         }
+        // return user;
         const sanitizedUser = sanitizeData(user);
         return sanitizedUser as UserResponseDto;
     }
@@ -39,5 +40,13 @@ export class UsersService {
         const updatedUser = await this.usersRepository.save(user);
         const sanitizedUser = sanitizeData(updatedUser);
         return sanitizedUser as UserResponseDto;
+    }
+
+    async deleteUser(id: string): Promise<void> {
+        const user = await this.usersRepository.findOne({ where: { id } });
+        if (!user) {
+            throw new NotFoundException(`User not found`);
+        }
+        await this.usersRepository.remove(user);
     }
 }

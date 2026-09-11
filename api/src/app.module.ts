@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -25,7 +25,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
         jwtSecret: config.get<string>('JWT_SECRET'),
-        appPort: config.get<number>('PORT'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: false,
       }),

@@ -3,6 +3,6 @@ export class UserResponseDto {
     name: string
     username: string;
     email: string;
-    createdAt: Date;
-    updatedAt?: Date;
+    createdAt: string;
+    updatedAt?: string;
 }
