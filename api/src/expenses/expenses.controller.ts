@@ -1,16 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ExpensesService } from './expenses.service.js';
 import { RegisterExpenseDto } from './dto/register-expense.dto.js';
 import { UpdateExpenseDto } from './dto/update-expense.dto.js';
+import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from '../common/decorators/current-user.decorator.js';
+import { RequestUserDto } from '../auth/dto/request-user.dto.js';
 
 @Controller('expenses')
 export class ExpensesController {
-  constructor(private readonly expensesService: ExpensesService) {}
+  constructor(private readonly expensesService: ExpensesService) { }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  // create(@Body() registerExpenseDto: RegisterExpenseDto) {
-  //   return this.expensesService.registerExpense(userId, registerExpenseDto);
-  // }
+  registerExpense(
+    @CurrentUser() user: RequestUserDto,
+    @Body() registerExpenseDto: RegisterExpenseDto
+  ) {
+    return this.expensesService.registerExpense(user, registerExpenseDto);
+  }
 
   @Get()
   findAll() {

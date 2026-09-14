@@ -15,6 +15,10 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
     }
     // Runs automatically AFTER the token is successfully verified
     async validate(payload: { sub: string; email: string; username: string }) {
-        return { userId: payload.sub, username: payload.username, email: payload.email };
+        return {
+            userId: payload.sub,
+            username: payload.username,
+            email: payload.email
+        };
     }
 }
